@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CardList from './CardList'
 import Searchbar from './Searchbar'
 import { fetchPosts } from '../actions';
+import './App.scss';
 
 class App extends React.Component {
     componentDidMount() {
