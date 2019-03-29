@@ -1,8 +1,6 @@
-import { createStore, combineReducers } from 'redux';
 import postsReducer from './postsReducer';
+import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({
-    postsReducer
+export default combineReducers({
+    posts: postsReducer
 });
-
-export default createStore(rootReducer);

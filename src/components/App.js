@@ -1,15 +1,29 @@
 import React from 'react';
-import reddit from '../apis/reddit';
+import { connect } from 'react-redux';
+
+import CardList from './CardList'
+import Searchbar from './Searchbar'
+import { fetchPosts } from '../actions';
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.fetchPosts();
+    }
     render() {
         return (
-            <div>Test</div>
+            <div>
+                <Searchbar />
+                <CardList posts={this.props.posts} />
+            </div>
         )
     }
 }
 
-// reddit.get('/r/pics/top/.json').then((res) => {console.log(res)})
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts
+    }
+}
 
 
-export default App;
+export default connect(mapStateToProps, { fetchPosts })(App);
