@@ -4,10 +4,17 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 import './Searchbar.scss';
-import { searchSubs, addSubreddit } from '../actions';
+import { searchSubs, addSubreddit, removeSubreddit } from '../actions';
 import TagCloud from './TagCloud';
+import Dropdown from './Dropdown';
 
 class Searchbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dropdown_open: false,
+        }
+    }
     onFormChange = debounce((values) => {
         const target = values.currentTarget.defaultValue;
         this.props.searchSubs(target);
@@ -17,28 +24,26 @@ class Searchbar extends React.Component {
         this.props.addSubreddit(subreddit);
     }
 
+    toggleDropdown() {
+        this.setState({dropdown_open: !this.state.dropdown_open});
+    }
+
     renderSearchOptions() {
         if (this.props.search_options) {
             return this.props.search_options.map((option) => {
                 return (
-                    <li onClick={() => this.onOptionClick(option.display_name)} key={option.name}>{option.display_name}</li>
+                    <li 
+                        onClick={() => this.onOptionClick(option.display_name)} 
+                        key={option.name}
+                    >
+                        {option.display_name}
+                    </li>
                 )
             })
         }
     }
 
-    renderTagCloud() {
-        if (this.props.subreddits) {
-            return this.props.subreddits.map((subreddit) => {
-                return (
-                    <li>{subreddit}</li>
-                )
-            });
-        }
-    }
-
     render () {
-        console.log(this.props);
         return (
             <div className="searchbar">
                 <form>
@@ -50,10 +55,8 @@ class Searchbar extends React.Component {
                         onChange={this.onFormChange}
                     />
                 </form>
-                <ul className="cloud-bin">
-                    {this.renderTagCloud()}
-                </ul>
-                <div className={`search-options-wrapper ${this.props.dirty ? 'open' : ''}`}>
+                <TagCloud items={this.props.subreddits} callback={this.props.removeSubreddit} />
+                <div className={`search-options-wrapper ${this.props.dirty && this.state.dropdown_open ? 'show' : ''}`}>
                     <ul className="search-options">
                         {this.renderSearchOptions()}
                     </ul>
@@ -71,7 +74,7 @@ const mapStateToProps = (state) => {
 }
 
 
-const search = connect(mapStateToProps, { searchSubs, addSubreddit })(Searchbar); 
+const search = connect(mapStateToProps, { searchSubs, addSubreddit, removeSubreddit })(Searchbar); 
 export default reduxForm({ form: 'subreddits' })(search);
 
 

@@ -14,10 +14,12 @@
 
 .search-options-wrapper {
     position: relative;
+    &.show {
+        display: block;
+    }
     .search-options {
-        position: absolute;
+        // position: absolute;
         background: $light-grey;
-        display: inline-block;
         width: 100%;
         li {
             cursor: pointer;
@@ -28,22 +30,3 @@
 }
 
 
-.cloud-bin {
-    padding: 20px;
-    margin: 10px 0;
-    border: 1px solid darken($light-grey, 20%);
-    background: darken($light-grey, 5%);
-    li {
-        margin: 0 10px 10px 0;
-        padding: 5px 10px;
-        background: darken($light-grey, 15%);
-        float: left;
-        box-shadow: 0 0 3px $shadow;
-    }
-    &:after {
-        content: "";
-        display: block;
-        visibility: hidden;
-        clear: both;
-    }
-}

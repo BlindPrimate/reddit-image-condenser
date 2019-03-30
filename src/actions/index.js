@@ -1,5 +1,5 @@
 import reddit from '../apis/reddit';
-import { FETCH_POSTS, SEARCH_SUBS, ADD_SUBREDDIT } from './types';
+import { FETCH_POSTS, SEARCH_SUBS, ADD_SUBREDDIT, REMOVE_SUBREDDIT } from './types';
 
 export const fetchPosts = () => async (dispatch) => {
     const response = await reddit.get('/r/pics/top/.json');
@@ -23,6 +23,13 @@ export const searchSubs = (search_term) => async (dispatch) => {
 export const addSubreddit = (subreddit) => { 
     return {
         type: ADD_SUBREDDIT,
+        payload: subreddit
+    }
+}
+
+export const removeSubreddit = (subreddit) => { 
+    return {
+        type: REMOVE_SUBREDDIT,
         payload: subreddit
     }
 }
