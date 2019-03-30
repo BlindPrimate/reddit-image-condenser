@@ -1,4 +1,6 @@
-#searchbar {
+@import './styles/variables.scss';
+
+.searchbar {
     width: 100%;
     padding: 10px 0 5px;
     input {
@@ -7,5 +9,19 @@
         border-radius: 2px;
         padding: 5px 7px;
         box-sizing: border-box;
+    }
+}
+
+.search-options-wrapper {
+    position: relative;
+    .search-options {
+        position: absolute;
+        background: $light-grey;
+        display: inline-block;
+        width: 100%;
+        li {
+            padding: 5px 10px;
+            border-bottom: 1px solid $light-grey-border;
+        }
     }
 }

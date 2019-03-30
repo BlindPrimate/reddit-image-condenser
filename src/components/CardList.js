@@ -6,7 +6,7 @@ class CardList extends React.Component {
     renderCards() {
         return this.props.posts.map((post) => {
             return (
-                <li className="card">
+                <li key={post.title} className="card">
                     <h3>
                         <a href={`https://www.reddit.com/${post.permalink}`}>{post.title}</a>
                     </h3>
