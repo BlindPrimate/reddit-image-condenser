@@ -1,5 +1,5 @@
 import reddit from '../apis/reddit';
-import { FETCH_POSTS, SEARCH_SUBS } from './types';
+import { FETCH_POSTS, SEARCH_SUBS, ADD_SUBREDDIT } from './types';
 
 export const fetchPosts = () => async (dispatch) => {
     const response = await reddit.get('/r/pics/top/.json');
@@ -10,7 +10,6 @@ export const fetchPosts = () => async (dispatch) => {
 }
 
 export const searchSubs = (search_term) => async (dispatch) => {
-    console.log(search_term)
     const response = await reddit.get(`/subreddits/search/.json`, {params: {q: search_term}});
     const pruned = response.data.data.children.map((post) => {
         return post.data;
@@ -18,5 +17,12 @@ export const searchSubs = (search_term) => async (dispatch) => {
     dispatch({
         type: SEARCH_SUBS,
         payload: pruned
-    })
+    });
+}
+
+export const addSubreddit = (subreddit) => { 
+    return {
+        type: ADD_SUBREDDIT,
+        payload: subreddit
+    }
 }

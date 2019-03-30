@@ -4,29 +4,44 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 import './Searchbar.scss';
-import { searchSubs } from '../actions';
+import { searchSubs, addSubreddit } from '../actions';
+import TagCloud from './TagCloud';
 
 class Searchbar extends React.Component {
     onFormChange = debounce((values) => {
         const target = values.currentTarget.defaultValue;
         this.props.searchSubs(target);
-    }, 700);
+    }, 500);
+
+    onOptionClick(subreddit) {
+        this.props.addSubreddit(subreddit);
+    }
 
     renderSearchOptions() {
-        return this.props.search_options.map((option) => {
-            return (
-                <li key={option.name}>{option.display_name}</li>
-            )
-        })
+        if (this.props.search_options) {
+            return this.props.search_options.map((option) => {
+                return (
+                    <li onClick={() => this.onOptionClick(option.display_name)} key={option.name}>{option.display_name}</li>
+                )
+            })
+        }
+    }
 
+    renderTagCloud() {
+        if (this.props.subreddits) {
+            return this.props.subreddits.map((subreddit) => {
+                return (
+                    <li>{subreddit}</li>
+                )
+            });
+        }
     }
 
     render () {
-        // console.log(this.props);
+        console.log(this.props);
         return (
             <div className="searchbar">
                 <form>
-                    <div>{this.props.search_term}</div>
                     <Field 
                         name="search_term" 
                         placeholder="Add Subreddt" 
@@ -35,6 +50,9 @@ class Searchbar extends React.Component {
                         onChange={this.onFormChange}
                     />
                 </form>
+                <ul className="cloud-bin">
+                    {this.renderTagCloud()}
+                </ul>
                 <div className={`search-options-wrapper ${this.props.dirty ? 'open' : ''}`}>
                     <ul className="search-options">
                         {this.renderSearchOptions()}
@@ -47,12 +65,13 @@ class Searchbar extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        search_options: state.search_options
+        search_options: state.search.search_options,
+        subreddits: state.search.subreddits
     }
 }
 
 
-const search = connect(mapStateToProps, { searchSubs })(Searchbar); 
+const search = connect(mapStateToProps, { searchSubs, addSubreddit })(Searchbar); 
 export default reduxForm({ form: 'subreddits' })(search);
 
 
