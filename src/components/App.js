@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 
 import CardList from './CardList'
 import Searchbar from './Searchbar'
-import { fetchPosts } from '../actions';
+import Header from './Header'
+import { addSubreddit } from '../actions';
 import './App.scss';
 
 class App extends React.Component {
-    componentDidMount() {
-        this.props.fetchPosts();
-    }
     render() {
         return (
             <div>
-                <Searchbar />
+                <Header>
+                    <Searchbar />
+                </Header>
                 <CardList posts={this.props.posts} />
             </div>
         )
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { fetchPosts })(App);
+export default connect(mapStateToProps, { addSubreddit })(App);

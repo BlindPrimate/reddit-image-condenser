@@ -1,7 +1,7 @@
 @import './styles/variables.scss';
 
 .cloud-bin {
-    padding: 20px;
+    padding: 10px 10px 0;
     margin: 10px 0;
     border: 1px solid darken($light-grey, 20%);
     background: darken($light-grey, 5%);
@@ -9,8 +9,10 @@
         display: block;
     }
     li {
+        font-size: 0.8em;
         margin: 0 10px 10px 0;
         padding: 5px 10px;
+        box-sizing: border-box;
         background: darken($light-grey, 12%);
         float: left;
         box-shadow: 0 0 3px $shadow;
@@ -20,5 +22,9 @@
         display: block;
         visibility: hidden;
         clear: both;
+    }
+    i {
+        padding: 0px 0px 0 5px;
+        color: lighten($dark-font, 10%);
     }
 }

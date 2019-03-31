@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 import './Searchbar.scss';
-import { searchSubs, addSubreddit, removeSubreddit } from '../actions';
+import { fetchPosts, searchSubs, addSubreddit, removeSubreddit } from '../actions';
 import TagCloud from './TagCloud';
 import Dropdown from './Dropdown';
 
@@ -47,9 +47,10 @@ class Searchbar extends React.Component {
         return (
             <div className="searchbar">
                 <form>
+                    <span>/r/</span>
                     <Field 
                         name="search_term" 
-                        placeholder="Add Subreddt" 
+                        placeholder="Subreddit" 
                         component="input" 
                         type="text" 
                         onChange={this.onFormChange}
@@ -74,7 +75,7 @@ const mapStateToProps = (state) => {
 }
 
 
-const search = connect(mapStateToProps, { searchSubs, addSubreddit, removeSubreddit })(Searchbar); 
+const search = connect(mapStateToProps, { fetchPosts, searchSubs, addSubreddit, removeSubreddit })(Searchbar); 
 export default reduxForm({ form: 'subreddits' })(search);
 
 
