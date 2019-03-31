@@ -8,6 +8,11 @@ import { addSubreddit } from '../actions';
 import './App.scss';
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.addSubreddit('pics');
+        this.props.addSubreddit('ladyladyboners');
+
+    }
     render() {
         return (
             <div>

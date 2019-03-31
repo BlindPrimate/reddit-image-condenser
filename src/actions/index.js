@@ -3,16 +3,15 @@ import axios from 'axios';
 import { FETCH_POSTS, SEARCH_SUBS, ADD_SUBREDDIT, REMOVE_SUBREDDIT } from './types';
 import { pull } from 'lodash';
 
-export const fetchPosts = (subreddits) => (dispatch) => {
-    console.log(subreddits);
+export const fetchPosts = () => async (dispatch, getState) => {
+    const { subreddits } = getState().search;
     const sub_map = subreddits.map((subreddit) => {
         return reddit.get(`/r/${subreddit}/top/.json`);
     });
-    axios.all(sub_map).then((res) => {
-        dispatch({
-            type: FETCH_POSTS,
-            payload: res
-        })
+    const res = await axios.all(sub_map);
+    dispatch({
+        type: FETCH_POSTS,
+        payload: res
     });
 }
 
@@ -28,21 +27,19 @@ export const searchSubs = (search_term) => async (dispatch) => {
 }
 
 export const addSubreddit = (subreddit) => (dispatch, getState) => { 
-    const { search } = getState();
+    const { subreddits } = getState().search;
     dispatch({
         type: ADD_SUBREDDIT,
         payload: subreddit
     });
-    return dispatch(fetchPosts([...search.subreddits, subreddit]));
+    dispatch(fetchPosts([...subreddits, subreddit]));
 }
 
 export const removeSubreddit = (subreddit) => (dispatch, getState) => { 
-    const currentState = getState();
+    const { subreddits } = getState().search;
     dispatch({
         type: REMOVE_SUBREDDIT,
         payload: subreddit
     });
-    console.log(currentState);
-    
-    return dispatch(fetchPosts(pull(currentState.search.subreddits, subreddit)));
+    dispatch(fetchPosts(subreddits));
 }

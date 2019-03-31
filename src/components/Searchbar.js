@@ -6,7 +6,6 @@ import { debounce } from 'lodash';
 import './Searchbar.scss';
 import { fetchPosts, searchSubs, addSubreddit, removeSubreddit } from '../actions';
 import TagCloud from './TagCloud';
-import Dropdown from './Dropdown';
 
 class Searchbar extends React.Component {
     constructor(props) {
@@ -69,7 +68,7 @@ class Searchbar extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        search_options: state.search.search_options,
+        search_options: state.search.search_results,
         subreddits: state.search.subreddits
     }
 }

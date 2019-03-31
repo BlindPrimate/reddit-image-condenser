@@ -21,7 +21,7 @@ export default (state = [], action) => {
                 .orderBy('ups', 'desc')
                 .value();
 
-            return [...state, ...merged];
+            return merged;
 
         default:
             return state;
