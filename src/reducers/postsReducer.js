@@ -1,14 +1,19 @@
-import { FETCH_POSTS } from "../actions/types";
+import { FETCH_POSTS, CHANGE_FETCH_STATUS } from "../actions/types";
 import _ from 'lodash';
 
 // second map function to remove nested data from reddit responses
 function _prune_payload(pay) {
     return pay.map((item) => {
         return item.data;
-    })
+    });
 }
 
-export default (state = [], action) => {
+const initialState = {
+    data: [],
+    isFetching: false
+}
+
+export default (state = initialState, action) => {
     switch (action.type) {
         case FETCH_POSTS:
             const payload = action.payload.map((sub) => {
@@ -21,8 +26,9 @@ export default (state = [], action) => {
                 .orderBy('ups', 'desc')
                 .value();
 
-            return merged;
-
+            return {...state, data: merged};
+        case CHANGE_FETCH_STATUS:
+            return {...state, isFetching: action.payload}
         default:
             return state;
     }

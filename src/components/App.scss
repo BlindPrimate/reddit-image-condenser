@@ -1,3 +1,5 @@
+@import './styles/variables.scss';
+
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
@@ -15,4 +17,9 @@ ul {
     li {
         list-style-type: none;
     }
+}
+
+#app {
+    background-color: darken($light-grey, 15%);
+    min-height: 100vh;
 }

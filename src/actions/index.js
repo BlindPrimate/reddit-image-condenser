@@ -1,10 +1,18 @@
 import reddit from '../apis/reddit';
 import axios from 'axios';
-import { FETCH_POSTS, SEARCH_SUBS, ADD_SUBREDDIT, REMOVE_SUBREDDIT } from './types';
-import { pull } from 'lodash';
+import { FETCH_POSTS, 
+         SEARCH_SUBS, 
+         ADD_SUBREDDIT, 
+         REMOVE_SUBREDDIT, 
+         CHANGE_FETCH_STATUS 
+        } from './types';
 
 export const fetchPosts = () => async (dispatch, getState) => {
-    const { subreddits } = getState().search;
+    const { subreddits } = getState();
+    dispatch({
+        type: CHANGE_FETCH_STATUS,
+        payload: true
+    });
     const sub_map = subreddits.map((subreddit) => {
         return reddit.get(`/r/${subreddit}/top/.json`);
     });
@@ -12,6 +20,10 @@ export const fetchPosts = () => async (dispatch, getState) => {
     dispatch({
         type: FETCH_POSTS,
         payload: res
+    });
+    return dispatch({
+        type: CHANGE_FETCH_STATUS,
+        payload: false
     });
 }
 
@@ -27,7 +39,7 @@ export const searchSubs = (search_term) => async (dispatch) => {
 }
 
 export const addSubreddit = (subreddit) => (dispatch, getState) => { 
-    const { subreddits } = getState().search;
+    const { subreddits } = getState();
     dispatch({
         type: ADD_SUBREDDIT,
         payload: subreddit

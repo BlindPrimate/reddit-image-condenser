@@ -4,9 +4,6 @@ import './CardList.scss';
 
 class CardList extends React.Component {
     renderCards() {
-        if (!this.props.posts.length) {
-            return <div className="no-content">Add a subreddit to see your images...</div>
-        }
         return this.props.posts.map((post) => {
             return (
                 <div className="container">

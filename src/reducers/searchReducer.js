@@ -1,10 +1,15 @@
-import { SEARCH_SUBS, ADD_SUBREDDIT, REMOVE_SUBREDDIT  } from "../actions/types";
-import { uniq, remove } from 'lodash';
+import { SEARCH_SUBS, CHANGE_FETCH_STATUS } from "../actions/types";
 
-export default (state = [], action) => {
+const initialState = {
+    search_results: [],
+    isFetching: false
+}
+export default (state = initialState, action) => {
     switch (action.type) {
         case SEARCH_SUBS:
-            return [...state, ...action.payload];
+            return {...state, ...action.payload};
+        case CHANGE_FETCH_STATUS:
+            return {...state, isFetching: action.payload};
         default:
             return state;
     }

@@ -1,5 +1,7 @@
 @import './styles/variables.scss';
+
 .header {
+    background-color: white;
     position: relative;
     z-index: 10;
     box-shadow: 0 0 3px $shadow;

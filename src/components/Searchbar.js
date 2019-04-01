@@ -67,9 +67,12 @@ class Searchbar extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const { search_results, isFetching } = state.subreddits;
+    const { subreddits } = state;
     return {
-        search_options: state.search.search_results,
-        subreddits: state.search.subreddits
+        search_results,
+        subreddits,
+        isFetching
     }
 }
 
