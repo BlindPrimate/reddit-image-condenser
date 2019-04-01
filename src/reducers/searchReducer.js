@@ -5,7 +5,7 @@ import {
 
 const initialState = {
     search_results: [],
-    error: []
+    error: null
 }
 
 export default (state = initialState, action) => {

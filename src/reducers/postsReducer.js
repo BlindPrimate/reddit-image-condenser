@@ -10,7 +10,7 @@ function _prune_payload(pay) {
 
 const initialState = {
     data: [],
-    error: []
+    error: null 
 }
 
 export default (state = initialState, action) => {

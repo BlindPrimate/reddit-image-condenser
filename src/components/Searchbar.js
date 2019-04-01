@@ -30,7 +30,12 @@ class Searchbar extends React.Component {
     }
 
     renderSearchResults() {
-        if (this.props.search_results) {
+
+        if (this.props.error) {
+            return <div>Oops!  We were unable to complete your search. Please try again.</div>
+        } else if (this.props.isFetching) {
+            return <Loader />
+        } else if (this.props.search_results) {
             return this.props.search_results.map((option) => {
                 return (
                     <li 
@@ -41,12 +46,6 @@ class Searchbar extends React.Component {
                     </li>
                 )
             })
-        }
-    }
-
-    renderSpinner() {
-        if (this.props.isFetching) {
-            return <Loader />
         }
     }
 
