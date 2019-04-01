@@ -16,7 +16,6 @@ class App extends React.Component {
     }
 
     renderCardList() {
-        console.log(this.props)
         if (this.props.isFetching) {
             return <Loader />
         } else if (!this.props.posts.length) {

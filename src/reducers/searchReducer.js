@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case SEARCH_SUBS:
-            return {...state, ...action.payload};
+            return {...state, search_results: action.payload};
         case CHANGE_FETCH_STATUS:
             return {...state, isFetching: action.payload};
         default:

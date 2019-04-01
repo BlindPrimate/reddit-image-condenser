@@ -28,6 +28,10 @@ export const fetchPosts = () => async (dispatch, getState) => {
 }
 
 export const searchSubs = (search_term) => async (dispatch) => {
+    dispatch({
+        type: CHANGE_FETCH_STATUS,
+        payload: true
+    });
     const response = await reddit.get(`/subreddits/search/.json`, {params: {q: search_term}});
     const pruned = response.data.data.children.map((post) => {
         return post.data;
@@ -35,6 +39,10 @@ export const searchSubs = (search_term) => async (dispatch) => {
     dispatch({
         type: SEARCH_SUBS,
         payload: pruned
+    });
+    return dispatch({
+        type: CHANGE_FETCH_STATUS,
+        payload: false
     });
 }
 

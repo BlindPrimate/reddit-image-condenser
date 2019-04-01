@@ -23,12 +23,12 @@
     }
 }
 
-.search-options-wrapper {
+.search-results-wrapper {
     position: relative;
     &.show {
         display: block;
     }
-    .search-options {
+    .search-results {
         background: $light-grey;
         width: 100%;
         li {

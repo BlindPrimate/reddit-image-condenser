@@ -9,12 +9,4 @@ export default combineReducers({
     subreddits: subredditReducer,
     posts: postsReducer,
     form: formReducer
-    // search: combineReducers({
-    //     search_results: searchReducer,
-    //     subreddits: subredditReducer,
-    // }),
-    // posts: combineReducers({
-    //     posts: postsReducer,
-    // }),
-    // form: formReducer
 });
