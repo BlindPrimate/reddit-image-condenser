@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './App.scss';
+
 import CardList from './CardList';
 import Searchbar from './Searchbar';
 import Header from './Header';
 import Loader from './common/Loader';
-import { addSubreddit } from '../actions';
+import TagCloud from './TagCloud';
+
+
+import { addSubreddit, removeSubreddit } from '../actions';
 import { createLoadingSelector } from '../selectors/loadingSelector';
-import './App.scss';
+import { createErrorSelector } from '../selectors/errorSelector';
 
 class App extends React.Component {
 
@@ -31,7 +36,10 @@ class App extends React.Component {
                 <Header>
                     <Searchbar />
                 </Header>
-                {this.renderCardList()}
+                <div className="container">
+                    <TagCloud items={this.props.subreddits} callback={this.props.removeSubreddit} />
+                    {this.renderCardList()}
+                </div>
             </div>
         )
     }
@@ -39,15 +47,18 @@ class App extends React.Component {
 
 // loading selector to check on isFetching status of action type
 const loadingSelector = createLoadingSelector(['FETCH_POSTS']);
+const errorSelector = createErrorSelector(['FETCH_POSTS']);
 
 const mapStateToProps = (state) => {
-    const { data, error } = state.posts;
+    const { posts } = state;
+    const { subreddits } = state;
     return {
-        posts: data,
+        posts,
+        subreddits,
         isFetching: loadingSelector(state),
-        error
+        error: errorSelector(state)
     }
 }
 
 
-export default connect(mapStateToProps, { addSubreddit })(App);
+export default connect(mapStateToProps, { addSubreddit, removeSubreddit })(App);

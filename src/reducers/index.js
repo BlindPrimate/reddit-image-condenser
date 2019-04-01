@@ -1,14 +1,16 @@
-import postsReducer from './postsReducer';
-import searchReducer from './searchReducer';
-import subredditReducer from './subredditReducer';
-import loadingReducer from './loadingReducer';
+import { postsReducer } from './postsReducer';
+import { searchReducer } from './searchReducer';
+import { subredditReducer } from './subredditReducer';
+import { errorReducer } from './errorReducer';
+import { loadingReducer } from './loadingReducer';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 export default combineReducers({
-    search: searchReducer,
+    search_results: searchReducer,
     subreddits: subredditReducer,
     posts: postsReducer,
     isFetching: loadingReducer,
-    form: formReducer
+    form: formReducer,
+    errors: errorReducer
 });

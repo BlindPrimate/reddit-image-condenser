@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
 import './Searchbar.scss';
-import { fetchPosts, searchSubs, addSubreddit, removeSubreddit } from '../actions';
-import TagCloud from './TagCloud';
+import { fetchPosts, searchSubs, addSubreddit } from '../actions';
 import Loader from './common/Loader';
 import { createLoadingSelector } from '../selectors/loadingSelector';
+import { createErrorSelector } from '../selectors/errorSelector';
 
 class Searchbar extends React.Component {
     constructor(props) {
@@ -30,12 +30,13 @@ class Searchbar extends React.Component {
     }
 
     renderSearchResults() {
-
-        if (this.props.error) {
+        if (this.props.errors === null) {
+            return <div>No Results</div>
+        } else if (this.props.errors) {
             return <div>Oops!  We were unable to complete your search. Please try again.</div>
         } else if (this.props.isFetching) {
-            return <Loader />
-        } else if (this.props.search_results) {
+            return <Loader text="Loading" />
+        } else if (this.props.search_results.length) {
             return this.props.search_results.map((option) => {
                 return (
                     <li 
@@ -45,7 +46,7 @@ class Searchbar extends React.Component {
                         {option.display_name}
                     </li>
                 )
-            })
+            });
         }
     }
 
@@ -62,7 +63,6 @@ class Searchbar extends React.Component {
                         onChange={this.onFormChange}
                     />
                 </form>
-                <TagCloud items={this.props.subreddits} callback={this.props.removeSubreddit} />
                 <div className={`search-results-wrapper ${this.props.dirty && this.state.dropdown_open ? 'show' : ''}`}>
                     <ul className="search-results">
                         {this.renderSearchResults()}
@@ -75,20 +75,19 @@ class Searchbar extends React.Component {
 
 
 const loadingSelector = createLoadingSelector(['SEARCH_SUBS']);
+const errorSelector = createErrorSelector(['SEARCH_SUBS']);
 
 const mapStateToProps = (state) => {
-    const { search_results, error } = state.search;
-    const { subreddits } = state;
+    const { search_results } = state;
     return {
         search_results,
-        subreddits,
         isFetching: loadingSelector(state),
-        error
+        errors: errorSelector(state)
     }
 }
 
 
-const search = connect(mapStateToProps, { fetchPosts, searchSubs, addSubreddit, removeSubreddit })(Searchbar); 
+const search = connect(mapStateToProps, { fetchPosts, searchSubs, addSubreddit })(Searchbar); 
 export default reduxForm({ form: 'subreddits' })(search);
 
 

@@ -1,4 +1,4 @@
-import { FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE } from "../actions/types";
+import { FETCH_POSTS_SUCCESS } from "../actions/types";
 import _ from 'lodash';
 
 // second map function to remove nested data from reddit responses
@@ -8,12 +8,7 @@ function _prune_payload(pay) {
     });
 }
 
-const initialState = {
-    data: [],
-    error: null 
-}
-
-export default (state = initialState, action) => {
+export const postsReducer = (state = [], action) => {
     switch (action.type) {
         case FETCH_POSTS_SUCCESS:
             const payload = action.payload.map((sub) => {
@@ -26,9 +21,7 @@ export default (state = initialState, action) => {
                 .orderBy('ups', 'desc')
                 .value();
 
-            return {...state, data: merged};
-        case FETCH_POSTS_FAILURE:
-            return {...state, error: action.payload }
+            return [...state, ...merged]
 
         default:
             return state;
