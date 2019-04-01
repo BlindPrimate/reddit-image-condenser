@@ -6,6 +6,7 @@ import Searchbar from './Searchbar';
 import Header from './Header';
 import Loader from './common/Loader';
 import { addSubreddit } from '../actions';
+import { createLoadingSelector } from '../selectors/loadingSelector';
 import './App.scss';
 
 class App extends React.Component {
@@ -36,11 +37,15 @@ class App extends React.Component {
     }
 }
 
+// loading selector to check on isFetching status of action type
+const loadingSelector = createLoadingSelector(['FETCH_POSTS']);
+
 const mapStateToProps = (state) => {
-    const { data, isFetching } = state.posts;
+    const { data, error } = state.posts;
     return {
         posts: data,
-        isFetching
+        isFetching: loadingSelector(state),
+        error
     }
 }
 

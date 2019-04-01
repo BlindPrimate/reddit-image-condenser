@@ -1,49 +1,61 @@
 import reddit from '../apis/reddit';
 import axios from 'axios';
-import { FETCH_POSTS, 
-         SEARCH_SUBS, 
+import { FETCH_POSTS_REQUEST, 
+         FETCH_POSTS_SUCCESS, 
+         FETCH_POSTS_FAILURE, 
+         SEARCH_SUBS_REQUEST,
+         SEARCH_SUBS_SUCCESS,
+         SEARCH_SUBS_FAILURE,
          ADD_SUBREDDIT, 
          REMOVE_SUBREDDIT, 
-         CHANGE_FETCH_STATUS 
         } from './types';
 
 export const fetchPosts = () => async (dispatch, getState) => {
-    const { subreddits } = getState();
+
     dispatch({
-        type: CHANGE_FETCH_STATUS,
-        payload: true
+        type: FETCH_POSTS_REQUEST
     });
+
+    const { subreddits } = getState();
     const sub_map = subreddits.map((subreddit) => {
         return reddit.get(`/r/${subreddit}/top/.json`);
     });
-    const res = await axios.all(sub_map);
-    dispatch({
-        type: FETCH_POSTS,
-        payload: res
-    });
-    return dispatch({
-        type: CHANGE_FETCH_STATUS,
-        payload: false
-    });
+
+    try {
+        const res = await axios.all(sub_map);
+        dispatch({
+            type: FETCH_POSTS_SUCCESS,
+            payload: res
+        });
+    } catch (err) {
+        dispatch({
+            type: FETCH_POSTS_FAILURE,
+            payload: err
+        });
+    }
 }
 
 export const searchSubs = (search_term) => async (dispatch) => {
+
     dispatch({
-        type: CHANGE_FETCH_STATUS,
-        payload: true
+        type: SEARCH_SUBS_REQUEST,
     });
-    const response = await reddit.get(`/subreddits/search/.json`, {params: {q: search_term}});
-    const pruned = response.data.data.children.map((post) => {
-        return post.data;
-    });
-    dispatch({
-        type: SEARCH_SUBS,
-        payload: pruned
-    });
-    return dispatch({
-        type: CHANGE_FETCH_STATUS,
-        payload: false
-    });
+
+    try {
+        const response = await reddit.get(`/subreddits/search/.json`, {params: {q: search_term}});
+        const pruned = response.data.data.children.map((post) => {
+            return post.data;
+        });
+        dispatch({
+            type: SEARCH_SUBS_SUCCESS,
+            payload: pruned
+        });
+    } catch (err) {
+        dispatch({
+            type: SEARCH_SUBS_FAILURE,
+            payload: err
+        });
+    }
 }
 
 export const addSubreddit = (subreddit) => (dispatch, getState) => { 

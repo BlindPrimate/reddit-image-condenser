@@ -7,6 +7,7 @@ import './Searchbar.scss';
 import { fetchPosts, searchSubs, addSubreddit, removeSubreddit } from '../actions';
 import TagCloud from './TagCloud';
 import Loader from './common/Loader';
+import { createLoadingSelector } from '../selectors/loadingSelector';
 
 class Searchbar extends React.Component {
     constructor(props) {
@@ -73,13 +74,17 @@ class Searchbar extends React.Component {
     }
 }
 
+
+const loadingSelector = createLoadingSelector(['SEARCH_SUBS']);
+
 const mapStateToProps = (state) => {
-    const { search_results, isFetching } = state.search;
+    const { search_results, error } = state.search;
     const { subreddits } = state;
     return {
         search_results,
         subreddits,
-        isFetching
+        isFetching: loadingSelector(state),
+        error
     }
 }
 

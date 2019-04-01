@@ -1,15 +1,19 @@
-import { SEARCH_SUBS, CHANGE_FETCH_STATUS } from "../actions/types";
+import { 
+         SEARCH_SUBS_SUCCESS,
+         SEARCH_SUBS_FAILURE,
+       } from "../actions/types";
 
 const initialState = {
     search_results: [],
-    isFetching: false
+    error: []
 }
+
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SEARCH_SUBS:
-            return {...state, search_results: action.payload};
-        case CHANGE_FETCH_STATUS:
-            return {...state, isFetching: action.payload};
+        case SEARCH_SUBS_SUCCESS:
+            return {...state, search_results: action.payload}
+        case SEARCH_SUBS_FAILURE:
+            return {...state, error: action.payload}
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import { FETCH_POSTS, CHANGE_FETCH_STATUS } from "../actions/types";
+import { FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE } from "../actions/types";
 import _ from 'lodash';
 
 // second map function to remove nested data from reddit responses
@@ -10,12 +10,12 @@ function _prune_payload(pay) {
 
 const initialState = {
     data: [],
-    isFetching: false
+    error: []
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_POSTS:
+        case FETCH_POSTS_SUCCESS:
             const payload = action.payload.map((sub) => {
                 return _prune_payload(sub.data.data.children);
             });
@@ -27,8 +27,9 @@ export default (state = initialState, action) => {
                 .value();
 
             return {...state, data: merged};
-        case CHANGE_FETCH_STATUS:
-            return {...state, isFetching: action.payload}
+        case FETCH_POSTS_FAILURE:
+            return {...state, error: action.payload }
+
         default:
             return state;
     }
