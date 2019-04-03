@@ -1,0 +1,12 @@
+@import './styles/variables.scss';
+
+.search-results {
+    @include standard-shadow;
+    background: $light-grey;
+    font-size: 0.8em;
+    li {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-bottom: 1px solid $light-grey-border;
+    }
+}

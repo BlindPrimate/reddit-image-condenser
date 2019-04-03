@@ -8,7 +8,6 @@ body {
 
 .container {
     margin: 0 auto;
-    max-width: 850px;
 }
 
 ul {
@@ -22,4 +21,35 @@ ul {
 #app {
     background-color: darken($light-grey, 15%);
     min-height: 100vh;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-column-gap: 20px;
+    .content-wrapper {
+        padding: 10px 5px 20px;
+        grid-column: 1 / 4;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    &.search-open .content-wrapper {
+        grid-column: 1 / 3;
+    }
+
+}
+
+
+
+.header {
+    grid-column: 1 / 4;
+}
+
+.cloud-bin {
+    grid-column: 1 / 4;
+}
+
+.card-list {
+    grid-column: 1 / 4;
+}
+
+.search-results {
+    grid-column: 3 / 3;
 }

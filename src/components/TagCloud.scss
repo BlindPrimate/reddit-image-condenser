@@ -2,7 +2,6 @@
 
 .cloud-bin {
     padding: 10px 10px 0;
-    margin: 10px 0;
     border: 1px solid darken($light-grey, 20%);
     background: darken($light-grey, 5%);
     &.show {
@@ -13,9 +12,9 @@
         margin: 0 10px 10px 0;
         padding: 5px 10px;
         box-sizing: border-box;
-        background: darken($light-grey, 12%);
+        background: $light-blue;
         float: left;
-        box-shadow: 0 0 3px $shadow;
+        box-shadow: 0 0 2px 1px $shadow;
     }
     &:after {
         content: "";

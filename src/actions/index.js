@@ -43,13 +43,6 @@ export const searchSubs = (search_term) => async (dispatch) => {
 
     try {
         const response = await reddit.get(`/subreddits/search/.json`, {params: {q: search_term}});
-        if (response.data.data.children.length < 0) {
-            dispatch({
-                type: SEARCH_SUBS_FAILURE,
-                payload: null
-            });
-            return 
-        }
         const pruned = response.data.data.children.map((post) => {
             return post.data;
         });

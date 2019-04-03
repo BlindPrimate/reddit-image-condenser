@@ -8,7 +8,7 @@ import Searchbar from './Searchbar';
 import Header from './Header';
 import Loader from './common/Loader';
 import TagCloud from './TagCloud';
-
+import SearchResults from './SearchResults';
 
 import { addSubreddit, removeSubreddit } from '../actions';
 import { createLoadingSelector } from '../selectors/loadingSelector';
@@ -32,14 +32,15 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div id="app">
+            <div id="app" className={`${this.props.search_results.length ? 'search-open' : '' }`}>
                 <Header>
                     <Searchbar />
                 </Header>
-                <div className="container">
+                <div className="content-wrapper">
                     <TagCloud items={this.props.subreddits} callback={this.props.removeSubreddit} />
                     {this.renderCardList()}
                 </div>
+                <SearchResults />
             </div>
         )
     }
@@ -50,11 +51,11 @@ const loadingSelector = createLoadingSelector(['FETCH_POSTS']);
 const errorSelector = createErrorSelector(['FETCH_POSTS']);
 
 const mapStateToProps = (state) => {
-    const { posts } = state;
-    const { subreddits } = state;
+    const { posts, subreddits, search_results } = state;
     return {
         posts,
         subreddits,
+        search_results,
         isFetching: loadingSelector(state),
         error: errorSelector(state)
     }

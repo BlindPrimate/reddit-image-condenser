@@ -15,17 +15,36 @@
 }
 
 .card {
-    margin: 10px 0;
-    padding: 10px 20px;
+    @include standard-shadow;
+    margin: 15px 0;
     background-color: $light-grey;
-    box-shadow: 0 1px 8px $shadow;
     border-radius: 3px;
-    h3 {
-        margin: 5px 0 10px;
+    h4 {
+        margin: 0 0 5px;
+    }
+    p {
+        margin: 0;
+        font-size: 0.8em;
     }
     a {
         text-decoration: none;
         color: black;
+    }
+    .card-info {
+        padding: 10px 12px 10px;
+        .details-left {
+            float: left;
+        }
+        .details-right {
+            float: right;
+
+        }
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+
+        }
     }
 }
 

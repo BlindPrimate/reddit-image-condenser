@@ -23,20 +23,5 @@
     }
 }
 
-.search-results-wrapper {
-    position: relative;
-    &.show {
-        display: block;
-    }
-    .search-results {
-        background: $light-grey;
-        width: 100%;
-        li {
-            cursor: pointer;
-            padding: 5px 10px;
-            border-bottom: 1px solid $light-grey-border;
-        }
-    }
-}
 
 
