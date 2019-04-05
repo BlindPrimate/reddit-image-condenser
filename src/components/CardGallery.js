@@ -1,10 +1,10 @@
 import React from 'react';
 import Media from './Media';
-import './CardList.scss';
+import './CardGallery.scss';
 
-import upvote from '../images/upvote.png';
+// import upvote from '../images/upvote.png';
 
-class CardList extends React.Component {
+class CardGallery extends React.Component {
     renderCards() {
         return this.props.posts.map((post) => {
             return (
@@ -33,11 +33,11 @@ class CardList extends React.Component {
     }
     render () {
         return (
-            <ul className="card-list">
+            <ul className="card-gallery">
                 {this.renderCards()}
             </ul>
         )
     }
 }
 
-export default CardList;
+export default CardGallery;
